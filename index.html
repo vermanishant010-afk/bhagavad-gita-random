@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Random Bhagavad Gita Shloka</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="main">
+        <h1>Random Bhagavad Gita Shloka</h1>
+        <p class="meta">Source: Bhagwad_Gita.json</p>
+
+        <div id="shlokaText" class="shloka">Click “Random Shloka” to begin</div>
+        <div id="translit" class="translit"></div>
+        <div id="meaning" class="meaning"></div>
+
+        <div class="controls">
+          <button id="randBtn">🎲 Random Shloka</button>
+          <button id="prevBtn">◀ Prev</button>
+          <button id="nextBtn">Next ▶</button>
+          <button id="copyBtn">Copy JSON</button>
+          <button id="downloadBtn">Download</button>
+
+          <div class="goto">
+            <label for="indexInput">Index:</label>
+            <input id="indexInput" type="number" min="1" step="1" placeholder="1" />
+            <button id="gotoBtn">Go</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="aside">
+        <h2>Details</h2>
+        <p>Chapter: <span id="chap">—</span></p>
+        <p>Verse: <span id="verse">—</span></p>
+        <p>ID: <span id="idTag">—</span></p>
+
+        <button id="tweetBtn" class="btn-ghost">Share</button>
+      </aside>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
