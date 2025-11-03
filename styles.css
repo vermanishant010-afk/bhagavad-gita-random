@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@600&display=swap');
 
 :root {
-  --bg: #060b16;
   --accent: #fbbf24;
-  --muted: #94a3b8;
+  --muted: #cbd5e1;
   --text: #f8fafc;
   font-family: 'Poppins', sans-serif;
 }
@@ -11,7 +11,11 @@
 html, body {
   margin: 0;
   height: 100%;
-  background: radial-gradient(circle at top, #0a152c, #020617);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background-image 1s ease-in-out;
   color: var(--text);
 }
 
@@ -21,37 +25,36 @@ html, body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
 }
 
 .card {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 40px;
-  max-width: 780px;
+  max-width: 820px;
   width: 100%;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
   text-align: center;
   animation: fadeIn 0.6s ease;
 }
 
 h1 {
-  margin: 0 0 10px;
-  font-size: 26px;
+  margin: 0 0 20px;
+  font-size: 28px;
   color: var(--accent);
-}
-
-.meta {
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 .shloka {
-  font-size: 22px;
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 24px;
+  line-height: 1.8;
   font-weight: 600;
-  line-height: 1.6;
-  margin: 20px 0;
+  color: #fff;
+  text-align: center;
+  margin: 10px 0 35px 0; /* two-line space before translation */
   white-space: pre-wrap;
 }
 
@@ -62,18 +65,18 @@ h1 {
 }
 
 .meaning {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--muted);
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  padding: 14px;
-  margin-top: 12px;
+  padding: 18px;
+  margin-top: 10px;
   text-align: left;
+  line-height: 1.6;
 }
 
 .controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
   margin-top: 24px;
@@ -84,27 +87,27 @@ button {
   color: #111827;
   border: none;
   border-radius: 10px;
-  padding: 10px 18px;
+  padding: 10px 22px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px var(--accent);
+  transform: scale(1.08);
+  box-shadow: 0 0 14px var(--accent);
 }
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: var(--muted);
 }
 
 .aside {
-  margin-top: 30px;
+  margin-top: 40px;
   text-align: left;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
 }
 
@@ -120,16 +123,6 @@ button:hover {
   font-size: 15px;
 }
 
-input[type="number"] {
-  width: 80px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: transparent;
-  color: var(--text);
-  text-align: center;
-}
-
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(15px);}
   to {opacity: 1; transform: translateY(0);}
@@ -140,6 +133,6 @@ input[type="number"] {
     padding: 24px;
   }
   .shloka {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
