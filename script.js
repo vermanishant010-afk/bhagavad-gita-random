@@ -3,34 +3,40 @@ const jsonPath = "Bhagwad_Gita.json";
 let data = [];
 let currentIndex = -1;
 
-// 🌄 Background images (rotates when new shloka is shown)
+// 🌄 Spiritual background images (rotates each time you click "Show Shloka")
 const gitaBackgrounds = [
-  "https://images.unsplash.com/photo-1607697987721-f69e9ad336a8?auto=format&fit=crop&w=1500&q=80",
-  "https://images.unsplash.com/photo-1598992616139-9b2a5e51550c?auto=format&fit=crop&w=1500&q=80",
-  "https://images.unsplash.com/photo-1608808178347-8d084b57cf7c?auto=format&fit=crop&w=1500&q=80",
-  "https://images.unsplash.com/photo-1586172687072-934d9a8f95b3?auto=format&fit=crop&w=1500&q=80",
-  "https://images.unsplash.com/photo-1598203196220-1e81aeb6a0ec?auto=format&fit=crop&w=1500&q=80"
+  "https://images.unsplash.com/photo-1607697987721-f69e9ad336a8?auto=format&fit=crop&w=1600&q=80", // temple
+  "https://images.unsplash.com/photo-1598992616139-9b2a5e51550c?auto=format&fit=crop&w=1600&q=80", // sunrise
+  "https://images.unsplash.com/photo-1608808178347-8d084b57cf7c?auto=format&fit=crop&w=1600&q=80", // ancient scroll
+  "https://images.unsplash.com/photo-1586172687072-934d9a8f95b3?auto=format&fit=crop&w=1600&q=80", // sky
+  "https://images.unsplash.com/photo-1598203196220-1e81aeb6a0ec?auto=format&fit=crop&w=1600&q=80"  // ocean
 ];
 
-// Function to change background image randomly
+// 🪔 Function to change the background smoothly
 function setRandomBackground() {
   const randomImage =
     gitaBackgrounds[Math.floor(Math.random() * gitaBackgrounds.length)];
-  document.body.style.backgroundImage = `url('${randomImage}')`;
+
+  // Select the body::before pseudo-element by injecting a new CSS rule dynamically
+  const sheet = document.styleSheets[0];
+  sheet.insertRule(
+    `body::before { background-image: url('${randomImage}') !important; }`,
+    sheet.cssRules.length
+  );
 }
 
-// Load JSON data
+// 📜 Load Bhagavad Gita JSON file
 async function loadJSON() {
   try {
     const res = await fetch(jsonPath);
     data = await res.json();
-    console.log("Loaded", data.length, "shlokas");
+    console.log("✅ Loaded", data.length, "shlokas");
   } catch (err) {
     alert("Failed to load JSON: " + err.message);
   }
 }
 
-// Display one shloka on screen
+// 🌺 Display one shloka on screen
 function showEntry(i) {
   if (!data.length) return;
   if (i < 0) i = 0;
@@ -51,15 +57,16 @@ function showEntry(i) {
   document.getElementById("verse").textContent = e.verse || e.Verse || "—";
   document.getElementById("idTag").textContent = e.ID || "—";
 
-  setRandomBackground(); // change background every time new shloka is shown
+  // Change background each time a new shloka is shown
+  setRandomBackground();
 }
 
-// Get random index from data
+// 🌸 Generate a random shloka index
 function randomIndex() {
   return Math.floor(Math.random() * data.length);
 }
 
-// Setup event listeners
+// 🕉 Setup the buttons
 function setupButtons() {
   // Show Shloka button
   document.getElementById("randBtn").onclick = () => showEntry(randomIndex());
@@ -80,7 +87,7 @@ function setupButtons() {
   };
 }
 
-// Initialize app
+// 🌼 Initialize the app
 window.onload = async () => {
   await loadJSON();
   setupButtons();
