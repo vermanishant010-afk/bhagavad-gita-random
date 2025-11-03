@@ -1,7 +1,25 @@
+// Path to your Bhagavad Gita JSON file
 const jsonPath = "Bhagwad_Gita.json";
 let data = [];
 let currentIndex = -1;
 
+// 🌄 Background images (rotates when new shloka is shown)
+const gitaBackgrounds = [
+  "https://images.unsplash.com/photo-1607697987721-f69e9ad336a8?auto=format&fit=crop&w=1500&q=80",
+  "https://images.unsplash.com/photo-1598992616139-9b2a5e51550c?auto=format&fit=crop&w=1500&q=80",
+  "https://images.unsplash.com/photo-1608808178347-8d084b57cf7c?auto=format&fit=crop&w=1500&q=80",
+  "https://images.unsplash.com/photo-1586172687072-934d9a8f95b3?auto=format&fit=crop&w=1500&q=80",
+  "https://images.unsplash.com/photo-1598203196220-1e81aeb6a0ec?auto=format&fit=crop&w=1500&q=80"
+];
+
+// Function to change background image randomly
+function setRandomBackground() {
+  const randomImage =
+    gitaBackgrounds[Math.floor(Math.random() * gitaBackgrounds.length)];
+  document.body.style.backgroundImage = `url('${randomImage}')`;
+}
+
+// Load JSON data
 async function loadJSON() {
   try {
     const res = await fetch(jsonPath);
@@ -12,6 +30,7 @@ async function loadJSON() {
   }
 }
 
+// Display one shloka on screen
 function showEntry(i) {
   if (!data.length) return;
   if (i < 0) i = 0;
@@ -19,55 +38,49 @@ function showEntry(i) {
   currentIndex = i;
 
   const e = data[i];
-  document.getElementById("shlokaText").textContent = e.sanskrit || e.Shloka || "—";
-  document.getElementById("translit").textContent = e.transliteration || e.Transliteration || "";
+  document.getElementById("shlokaText").textContent =
+    e.sanskrit || e.Shloka || "—";
+  document.getElementById("translit").textContent =
+    e.transliteration || e.Transliteration || "";
   document.getElementById("meaning").textContent =
-    (e.English || e.EngMeaning || "") + "\n\n" + (e.Hindi || e.HinMeaning || "");
+    (e.English || e.EngMeaning || "") +
+    "\n\n" +
+    (e.Hindi || e.HinMeaning || "");
+
   document.getElementById("chap").textContent = e.chapter || e.Chapter || "—";
   document.getElementById("verse").textContent = e.verse || e.Verse || "—";
   document.getElementById("idTag").textContent = e.ID || "—";
+
+  setRandomBackground(); // change background every time new shloka is shown
 }
 
+// Get random index from data
 function randomIndex() {
   return Math.floor(Math.random() * data.length);
 }
 
-function copyJSON() {
-  if (currentIndex < 0) return;
-  const obj = data[currentIndex];
-  navigator.clipboard.writeText(JSON.stringify(obj, null, 2));
-  alert("Copied to clipboard!");
-}
-
-function downloadJSON() {
-  if (currentIndex < 0) return;
-  const blob = new Blob([JSON.stringify(data[currentIndex], null, 2)], {
-    type: "application/json",
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "shloka.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
+// Setup event listeners
 function setupButtons() {
+  // Show Shloka button
   document.getElementById("randBtn").onclick = () => showEntry(randomIndex());
-  document.getElementById("prevBtn").onclick = () => showEntry(currentIndex - 1);
-  document.getElementById("nextBtn").onclick = () => showEntry(currentIndex + 1);
-  document.getElementById("copyBtn").onclick = copyJSON;
-  document.getElementById("downloadBtn").onclick = downloadJSON;
-  document.getElementById("gotoBtn").onclick = () => {
-    const n = parseInt(document.getElementById("indexInput").value, 10);
-    if (!isNaN(n)) showEntry(n - 1);
-  };
+
+  // Share button (Twitter)
   document.getElementById("tweetBtn").onclick = () => {
-    const t = document.getElementById("shlokaText").textContent;
-    window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(t));
+    if (currentIndex < 0) return;
+    const t =
+      "📜 " +
+      (data[currentIndex].sanskrit ||
+        data[currentIndex].Shloka ||
+        "Bhagavad Gita") +
+      "\n\n— Bhagavad Gita";
+    window.open(
+      "https://twitter.com/intent/tweet?text=" + encodeURIComponent(t),
+      "_blank"
+    );
   };
 }
 
+// Initialize app
 window.onload = async () => {
   await loadJSON();
   setupButtons();
