@@ -15,7 +15,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ✨ background overlay layer that JS updates dynamically */
+/* ✨ Background layer updated dynamically from JS */
 body::before {
   content: "";
   position: fixed;
@@ -24,11 +24,12 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.4;                /* soft translucent effect */
+  opacity: 0.45;
   z-index: -1;
   transition: background-image 1s ease-in-out;
 }
 
+/* Outer wrapper keeps card centered vertically */
 .wrap {
   display: flex;
   justify-content: center;
@@ -39,17 +40,19 @@ body::before {
   backdrop-filter: blur(4px);
 }
 
+/* Main Card */
 .card {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  padding: 40px;
+  padding: 40px 30px;
   max-width: 820px;
-  width: 100%;
+  width: 90%;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
   text-align: center;
   animation: fadeIn 0.6s ease;
 }
 
+/* Title */
 h1 {
   margin: 0 0 20px;
   font-size: 28px;
@@ -57,6 +60,7 @@ h1 {
   letter-spacing: 1px;
 }
 
+/* Sanskrit Shloka */
 .shloka {
   font-family: 'Noto Serif Devanagari', serif;
   font-size: 24px;
@@ -66,29 +70,37 @@ h1 {
   text-align: center;
   margin: 10px 0 35px 0; /* space before translation */
   white-space: pre-wrap;
+  max-width: 100%;
+  word-break: break-word;
 }
 
+/* Transliteration (optional line below Sanskrit) */
 .translit {
   font-size: 16px;
   color: #e2e8f0;
   margin-bottom: 8px;
+  text-align: center;
 }
 
+/* Meaning (both English + Hindi) */
 .meaning {
   font-size: 17px;
   color: var(--muted);
   background: rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  padding: 18px;
+  padding: 18px 20px;
   margin-top: 10px;
-  text-align: left;
-  line-height: 1.6;
+  text-align: center; /* changed from left → center */
+  line-height: 1.7;
+  white-space: pre-line;
 }
 
+/* Buttons */
 .controls {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 24px;
 }
 
@@ -114,9 +126,10 @@ button:hover {
   color: var(--muted);
 }
 
+/* Details Section */
 .aside {
   margin-top: 40px;
-  text-align: left;
+  text-align: center; /* Center this too */
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 20px;
 }
@@ -133,16 +146,23 @@ button:hover {
   font-size: 15px;
 }
 
+/* Smooth fade animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 600px) {
+/* 📱 Responsive: smaller screens */
+@media (max-width: 768px) {
   .card {
     padding: 24px;
+    width: 95%;
   }
   .shloka {
     font-size: 20px;
+  }
+  .meaning {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
