@@ -11,12 +11,22 @@
 html, body {
   margin: 0;
   height: 100%;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ✨ background overlay layer that JS updates dynamically */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  opacity: 0.4;                /* soft translucent effect */
+  z-index: -1;
   transition: background-image 1s ease-in-out;
-  color: var(--text);
 }
 
 .wrap {
@@ -25,7 +35,7 @@ html, body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(4px);
 }
 
@@ -54,7 +64,7 @@ h1 {
   font-weight: 600;
   color: #fff;
   text-align: center;
-  margin: 10px 0 35px 0; /* two-line space before translation */
+  margin: 10px 0 35px 0; /* space before translation */
   white-space: pre-wrap;
 }
 
@@ -124,8 +134,8 @@ button:hover {
 }
 
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(15px);}
-  to {opacity: 1; transform: translateY(0);}
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 600px) {
