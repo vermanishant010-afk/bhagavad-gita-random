@@ -3,35 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bhagavad Gita Shloka</title>
+  <title>Bhagavad Gita Shloka Viewer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <div class="main">
+    <div class="card" role="main">
+      <header>
         <h1>Bhagavad Gita Shloka</h1>
+      </header>
 
-        <div id="shlokaText" class="shloka">Click “Show Shloka” to begin</div>
+      <section class="main-content">
+        <div id="shlokaText" class="shloka" tabindex="0" aria-live="polite">
+          Click “Show Shloka” to begin
+        </div>
         <div id="translit" class="translit"></div>
         <div id="meaning" class="meaning"></div>
-
         <div class="controls">
-          <button id="randBtn">📜 Show Shloka</button>
+          <button id="randBtn" aria-label="Show a random shloka">📜 Show Shloka</button>
         </div>
-      </div>
+      </section>
 
-      <aside class="aside">
+      <aside class="aside" aria-label="Details panel">
         <h2>Details</h2>
-        <p>Chapter: <span id="chap">—</span></p>
-        <p>Verse: <span id="verse">—</span></p>
-        <p>ID: <span id="idTag">—</span></p>
-
-        <button id="tweetBtn" class="btn-ghost">Share</button>
+        <dl>
+          <dt>Chapter</dt>
+          <dd id="chap">—</dd>
+          <dt>Verse</dt>
+          <dd id="verse">—</dd>
+          <dt>ID</dt>
+          <dd id="idTag">—</dd>
+        </dl>
+        <button id="tweetBtn" class="btn-ghost" aria-label="Share this shloka on Twitter">Share</button>
       </aside>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
