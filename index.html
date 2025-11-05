@@ -1,37 +1,134 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bhagavad Gita Shloka</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>श्रीमद् भगवद् गीता</title>
+
+  <style>
+    body {
+      font-family: "Noto Serif Devanagari", "Georgia", serif;
+      color: #2b1d0e;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url("gita_background.png"); /* Rename image to this */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backdrop-filter: brightness(1.05) contrast(1.05);
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.82);
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 80%;
+      max-width: 900px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      border: 6px double goldenrod;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #3b2608;
+      text-shadow: 1px 1px 3px #e3c46e;
+    }
+
+    .shloka {
+      font-size: 1.3rem;
+      white-space: pre-line;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+
+    .translit {
+      font-size: 1rem;
+      color: #4a3728;
+      margin-top: 0.8rem;
+    }
+
+    .meaning {
+      font-size: 1rem;
+      color: #1d150c;
+      margin-top: 1rem;
+      line-height: 1.8;
+      text-align: left;
+      padding: 0 1.5rem;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #f4e3a1, #d4b85f);
+      border: 2px solid goldenrod;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      color: #3a260b;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #fff3c6, #f0d66d);
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="main">
-        <h1>Bhagavad Gita Shloka</h1>
+  <div class="container">
+    <h1>श्रीमद् भगवद् गीता</h1>
 
-        <div id="shlokaText" class="shloka">Click “Show Shloka” to begin</div>
-        <div id="translit" class="translit"></div>
-        <div id="meaning" class="meaning"></div>
+    <div id="shlokaText" class="shloka">लोड हो रहा है...</div>
+    <div id="translit" class="translit"></div>
 
-        <div class="controls">
-          <button id="randBtn">📜 Show Shloka</button>
-        </div>
-      </div>
+    <div id="meaning" class="meaning"></div>
 
-      <aside class="aside">
-        <h2>Details</h2>
-        <p>Chapter: <span id="chap">—</span></p>
-        <p>Verse: <span id="verse">—</span></p>
-        <p>ID: <span id="idTag">—</span></p>
-
-        <button id="tweetBtn" class="btn-ghost">Share</button>
-      </aside>
-    </div>
+    <button id="krishnaBtn" class="btn">ॐ कृष्ण सुझाव</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const jsonPath = "Bhagwad_Gita.json";
+    let data = [];
+
+    async function loadJSON() {
+      try {
+        const res = await fetch(jsonPath);
+        data = await res.json();
+        showEntry(randomIndex());
+      } catch (err) {
+        alert("JSON फ़ाइल लोड करने में समस्या: " + err.message);
+      }
+    }
+
+    function showEntry(i) {
+      if (!data.length) return;
+      const e = data[i];
+      document.getElementById("shlokaText").textContent =
+        e.sanskrit || e.Shloka || "—";
+      document.getElementById("translit").textContent =
+        e.transliteration || e.Transliteration || "";
+      document.getElementById("meaning").innerHTML =
+        `<b>English:</b> ${(e.English || e.EngMeaning || "")}<br><br>` +
+        `<b>Hindi:</b> ${(e.Hindi || e.HinMeaning || "")}`;
+    }
+
+    function randomIndex() {
+      return Math.floor(Math.random() * data.length);
+    }
+
+    window.onload = async () => {
+      await loadJSON();
+      document.getElementById("krishnaBtn").onclick = () =>
+        showEntry(randomIndex());
+    };
+  </script>
 </body>
 </html>
